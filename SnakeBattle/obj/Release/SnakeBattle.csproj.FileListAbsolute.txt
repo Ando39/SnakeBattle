@@ -7,3 +7,4 @@ C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.Prope
 C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.csproj.GenerateResource.Cache
 C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.exe
 C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.pdb
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.csprojResolveAssemblyReference.cache

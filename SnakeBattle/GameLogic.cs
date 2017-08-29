@@ -24,7 +24,7 @@ namespace SnakeBattle
 
     class Snake
     {
-        public int[,] directions = new int[4, 2] { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
+        private int[,] directions = new int[4, 2] { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
 
         public List<SnakePart> body = new List<SnakePart>();
         public int direction;
@@ -37,6 +37,7 @@ namespace SnakeBattle
         /// <param name="heady">Pozice hlavy v poli</param>
         /// <param name="length">Pocatecni delka hada</param>
         /// <param name="direction">Smer pohybu hlavy hada</param>
+        
         public Snake(bool isPlayer, int headx, int heady, int length, int direction)
         {
             this.isPlayer = isPlayer;
@@ -70,11 +71,11 @@ namespace SnakeBattle
                 body[body.Count - 1] = sp;
             }
             else score += 15;
-            SnakePart next = NextHeadPosition(body[0]);
+            SnakePart next = NextHeadPosition(body[0],direction);
             body.Insert(0, next);
         }
 
-        public SnakePart NextHeadPosition(SnakePart head)
+        public SnakePart NextHeadPosition(SnakePart head, int direction)
         {
             SnakePart next = head;
             next.x += directions[direction - 1, 0];
@@ -108,6 +109,7 @@ namespace SnakeBattle
     class Board
     {
         public const int UP = 1, RIGHT = 2, DOWN = 3, LEFT = 4;
+        public const int FOODNUM = 2;
 
         public int[,] field;
         public Snake snake1, snake2;
@@ -183,7 +185,7 @@ namespace SnakeBattle
 
             f = new Food(x, y, type);
 
-            field[x, y] = 3;
+            field[x, y] = FOODNUM;
 
             return f;
         }
@@ -217,7 +219,7 @@ namespace SnakeBattle
                 board.foodArray.Add(board.CreateFood());
 
             foreach (Food f in board.foodArray)
-                board.field[f.x, f.y] = 3;
+                board.field[f.x, f.y] = Board.FOODNUM;
         }
 
         /// <summary>
@@ -238,7 +240,7 @@ namespace SnakeBattle
         /// <summary>
         /// Pohyb hada o jedno policko ve smeru hada
         /// Rozdeleni na pripady dle hodnoty policka
-        /// (0 - prazdne, 1 - obsazene jednim z hadu, 3 - jidlo)
+        /// (0 - prazdne, 1 - obsazene jednim z hadu, FOODNUM - jidlo)
         /// V pripade narazu na jidlo, prodlouzeni hada a pridani noveho jidla
         /// </summary>
         /// <param name="s">Had, ktery se ma posunout</param>
@@ -251,7 +253,7 @@ namespace SnakeBattle
             SnakePart head = s.body[0];
             SnakePart tail = s.body[s.body.Count - 1];
 
-            SnakePart nextHeadPos = board.FixBoardPosition(s.NextHeadPosition(s.body[0]));
+            SnakePart nextHeadPos = board.FixBoardPosition(s.NextHeadPosition(s.body[0],s.direction));
 
             board.field[tail.x, tail.y] = 0;
 
@@ -263,7 +265,7 @@ namespace SnakeBattle
                     break;
                 case 1:
                     return true;
-                case 3:
+                case Board.FOODNUM:
                     board.field[nextHeadPos.x, nextHeadPos.y] = 1;
                     board.field[tail.x, tail.y] = 1;
                     s.Move(true);
@@ -294,24 +296,22 @@ namespace SnakeBattle
         /// <param name="head">Hlava hada</param>
         /// <param name="depth">Hloubka prohledavani</param>
         /// <returns>Predavani parametru v ramci rekurze</returns>
+        
         private int SnakeAIMove(ref Snake s, SnakePart head, int depth)
         {
             int bestDir = s.direction;
             int bestVal = int.MinValue;
             int val;
-
-
+            
             for (int i = 0; i < 4; ++i)
             {
                 val = 0;
-                int nextx = head.x + s.directions[i, 0];
-                int nexty = head.y + s.directions[i, 1];
 
-                SnakePart next = board.FixBoardPosition(new SnakePart(nextx, nexty, i + 1));
+                SnakePart next = board.FixBoardPosition(s.NextHeadPosition(head,i+1));
 
                 int fieldVal = board.field[next.x, next.y];
 
-                if (fieldVal == 3) val = 10;
+                if (fieldVal == Board.FOODNUM) val = 10;
                 else if (fieldVal == 0) val = 0;
                 else val = -10;
 
@@ -326,7 +326,6 @@ namespace SnakeBattle
                     bestVal = val;
                     bestDir = i + 1;
                 }
-
             }
 
             s.direction = bestDir;

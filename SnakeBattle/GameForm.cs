@@ -11,7 +11,6 @@ namespace SnakeBattle
         const string SNAKE1COLOR = "Green", SNAKE2COLOR = "Purple";
         int type, defaultTick;
         int width, height;
-        int snake1Dir, snake2Dir;
         bool isDirectionChange1 = false;
         bool isDirectionChange2 = false;
 
@@ -51,9 +50,6 @@ namespace SnakeBattle
                 case CVC: game.InitBoard(false, false, 8); break;
             }
 
-            snake1Dir = game.board.snake1.direction;
-            snake2Dir = game.board.snake2.direction;
-
             DrawBoard();
         }
 
@@ -63,8 +59,8 @@ namespace SnakeBattle
         private void DrawBoard()
         {
             DrawFood();
-            DrawSnake(game.board.snake1, SNAKE1COLOR);
-            DrawSnake(game.board.snake2, SNAKE2COLOR);
+            DrawSnake(ref game.board.snake1, SNAKE1COLOR);
+            DrawSnake(ref game.board.snake2, SNAKE2COLOR);
             grass.Controls.Add(pressKey);
             pressKey.BringToFront();
 
@@ -92,7 +88,7 @@ namespace SnakeBattle
         /// </summary>
         /// <param name="s">Had, ktery se ma vykreslit</param>
         /// <param name="color">Barva hada</param>
-        private void DrawSnake(Snake s, string color)
+        private void DrawSnake(ref Snake s, string color)
         {
             string[] directions = new string[4] { "up", "right", "down", "left" };
             for (int i = 0; i < s.body.Count; ++i)
