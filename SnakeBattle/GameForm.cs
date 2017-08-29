@@ -12,9 +12,11 @@ namespace SnakeBattle
         int type, defaultTick;
         int width, height;
         int snake1Dir, snake2Dir;
+        bool isDirectionChange1 = false;
+        bool isDirectionChange2 = false;
 
         private GameLogic game;
-        
+
         /// <summary>
         ///Vytvoreni instance herni logiky dle typu hry
         ///Nastaveni designu horniho herniho panelu (pole info)
@@ -51,7 +53,7 @@ namespace SnakeBattle
 
             snake1Dir = game.board.snake1.direction;
             snake2Dir = game.board.snake2.direction;
-            
+
             DrawBoard();
         }
 
@@ -145,11 +147,12 @@ namespace SnakeBattle
 
             return pb;
         }
-        
+
         /// <summary>
         /// Q - pauza, sipky - hrac 1, WDSA - hrac 2
         /// isDirectionChange - pri stisknuti tlacitka smeru jiz nelze
-        /// zmenit smer, dokud se neprevede pohyb (tj. timer.Tick)
+        /// zmenit smer, dokud se neprevede pohyb (tj. timer.Tick),
+        /// navic je pak mozne ovladat oba hady soucasne
         /// </summary>
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
@@ -159,19 +162,24 @@ namespace SnakeBattle
                 timer1.Enabled = !timer1.Enabled;
                 pressKey.Visible = !pressKey.Visible;
             }
-            
+
             if (type == PVP || type == PVC)
             {
-                int dir = game.board.snake1.direction;
+                if (!isDirectionChange1)
+                {
 
-                if (e.KeyCode == Keys.Up && dir != Board.DOWN) dir = Board.UP;
-                else if (e.KeyCode == Keys.Right && dir != Board.LEFT) dir = Board.RIGHT;
-                else if (e.KeyCode == Keys.Down && dir != Board.UP) dir = Board.DOWN;
-                else if (e.KeyCode == Keys.Left && dir != Board.RIGHT) dir = Board.LEFT;
+                    int dir = game.board.snake1.direction;
 
-                snake1Dir = dir;
+                    if (e.KeyCode == Keys.Up && dir != Board.DOWN) dir = Board.UP;
+                    else if (e.KeyCode == Keys.Right && dir != Board.LEFT) dir = Board.RIGHT;
+                    else if (e.KeyCode == Keys.Down && dir != Board.UP) dir = Board.DOWN;
+                    else if (e.KeyCode == Keys.Left && dir != Board.RIGHT) dir = Board.LEFT;
 
-                if(type == PVP)
+                    if (game.board.snake1.direction != dir) isDirectionChange1 = true;
+                    game.board.snake1.direction = dir;
+                }
+
+                if (type == PVP && !isDirectionChange2)
                 {
                     int dir2 = game.board.snake2.direction;
 
@@ -180,9 +188,11 @@ namespace SnakeBattle
                     else if (e.KeyCode == (Keys)'S' && dir2 != Board.UP) dir2 = Board.DOWN;
                     else if (e.KeyCode == (Keys)'A' && dir2 != Board.RIGHT) dir2 = Board.LEFT;
 
-                    snake2Dir = dir2;
+                    if (game.board.snake2.direction != dir2) isDirectionChange2 = true;
+
+                    game.board.snake2.direction = dir2;
+
                 }
-                
             }
         }
 
@@ -195,9 +205,6 @@ namespace SnakeBattle
         private void timer1_Tick(object sender, EventArgs e)
         {
             grass.Controls.Clear();
-
-            game.board.snake1.direction = snake1Dir;
-            game.board.snake2.direction = snake2Dir;
             
             int gameOver = game.MoveAndUpdate();
 
@@ -210,6 +217,9 @@ namespace SnakeBattle
                 gameEnd.Show();
                 replay.Focus();
             }
+
+            isDirectionChange1 = false;
+            isDirectionChange2 = false;
         }
 
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
