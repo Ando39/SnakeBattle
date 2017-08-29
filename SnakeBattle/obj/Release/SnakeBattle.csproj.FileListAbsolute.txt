@@ -1,0 +1,9 @@
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\bin\Release\SnakeBattle.exe.config
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\bin\Release\SnakeBattle.exe
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\bin\Release\SnakeBattle.pdb
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.GameForm.resources
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.MenuForm.resources
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.Properties.Resources.resources
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.csproj.GenerateResource.Cache
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.exe
+C:\Users\Olga\Source\Repos\SnakeBattle\SnakeBattle\obj\Release\SnakeBattle.pdb
