@@ -285,18 +285,18 @@ namespace SnakeBattle
         }
 
         /// <summary>
-        /// Rekurzivni prohledavani do hloubky depth
-        /// Vyber nejlepsiho smeru
-        /// Kazdy smer je ohodnocen dle hodnoty policka
-        /// a nasledne je vybran smer s nejlepsim hodnocenim
-        /// V pripade narazu na cast tela nektereho z hadu,
-        /// je prohledavani vetve ukonceno
+        /// Zvoleni nejlepsiho smeru hada
+        /// Vyber probiha rekurzivnim prohledanim do hloubky 
+        /// vsech moznych smeru hada a naslednym ohodnocenim 
+        /// a vyberem nejlepsiho mozneho smeru. 
+        /// V pripade narazu na cast tela je prohledavani 
+        /// dane vetve preruseno a je vracena dosavadni hodnota
         /// </summary>
         /// <param name="s">Had</param>
         /// <param name="head">Hlava hada</param>
         /// <param name="depth">Hloubka prohledavani</param>
         /// <returns>Predavani parametru v ramci rekurze</returns>
-        
+
         private int SnakeAIMove(ref Snake s, SnakePart head, int depth)
         {
             int bestDir = s.direction;
