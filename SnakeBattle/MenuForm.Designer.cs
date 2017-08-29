@@ -84,7 +84,7 @@
             this.playCVC.Name = "playCVC";
             this.playCVC.Size = new System.Drawing.Size(340, 52);
             this.playCVC.TabIndex = 3;
-            this.playCVC.Text = "Watch CVC (Beta)";
+            this.playCVC.Text = "Watch CVC";
             this.playCVC.UseVisualStyleBackColor = false;
             this.playCVC.Click += new System.EventHandler(this.playButton_Click);
             // 
@@ -153,7 +153,7 @@
             this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.backButton.Font = new System.Drawing.Font("Rosewood Std Regular", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.backButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(100)))), ((int)(((byte)(14)))));
-            this.backButton.Location = new System.Drawing.Point(239, 369);
+            this.backButton.Location = new System.Drawing.Point(239, 389);
             this.backButton.Name = "backButton";
             this.backButton.Size = new System.Drawing.Size(340, 52);
             this.backButton.TabIndex = 6;
